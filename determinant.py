@@ -13,7 +13,7 @@ def solve_three_by_three(matrix):
         two_by_two = []
         for j, row in enumerate(matrix):
             if i == j:
-                prefix = row[0] if i % 2 != 0 else -row[0]
+                prefix = row[0] if i % 2 == 0 else -row[0]
             else:
                 two_by_two.append(row[1:])
 
@@ -28,7 +28,7 @@ def three_by_three_short(matrix):
     for i, current in enumerate(matrix):
         rows = matrix[:i] + matrix[i+1:]
         two_by_two = [row[1:] for row in rows]
-        prefix = current[0] if i % 2 != 0 else -current[0]
+        prefix = current[0] if i % 2 == 0 else -current[0]
         total += solve_two_by_two(two_by_two) * prefix
 
     return total
@@ -38,14 +38,14 @@ def three_by_three_shorter(matrix):
     total = 0
     for i, current in enumerate(matrix):
         two_by_two = [row[1:] for j, row in enumerate(matrix) if i != j]
-        prefix = current[0] if i % 2 != 0 else -current[0]
+        prefix = current[0] if i % 2 == 0 else -current[0]
         total += solve_two_by_two(two_by_two) * prefix
 
     return total
 
 
 def three_by_three_oneline(m):
-    return sum([stbt([r[1:] for j, r in enumerate(m) if i != j]) * (c[0] if i % 2 != 0 else -c[0]) for i, c, in enumerate(m)])
+    return sum([stbt([r[1:] for j, r in enumerate(m) if i != j]) * (c[0] if i % 2 == 0 else -c[0]) for i, c, in enumerate(m)])
 
 
 def main():
@@ -55,8 +55,10 @@ def main():
         [3, -2, 5]
     ]
 
+    new_matrix = [[-num for num in row]for row in matrix]
+
     print(three_by_three_shorter(matrix))
-    print(three_by_three_oneline(matrix))
+    print(three_by_three_shorter(new_matrix))
 
 
 if __name__ == '__main__':
